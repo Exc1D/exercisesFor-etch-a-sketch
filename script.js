@@ -14,3 +14,10 @@ function createGrid(size) {
   cell.classList.add("cell");
   container.appendChild(cell);
 }
+
+const userInput = prompt("Enter grid size (1-100):");
+
+console.log("User entered:", userInput);
+console.log("Type of input:", typeof userInput);
+
+const gridSize = parseInt(userInput);
