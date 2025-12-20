@@ -21,3 +21,13 @@ console.log("User entered:", userInput);
 console.log("Type of input:", typeof userInput);
 
 const gridSize = parseInt(userInput);
+console.log("Converted to a number:", gridSize);
+console.log("Type after conversion:", typeof gridSize);
+
+if (gridSize >= 1 && gridSize <= 100) {
+  console.log("Valid input, creating grid...");
+  createGrid(gridSize);
+} else {
+  console.log("Invalid input!");
+  alert("Please enter a number between 1 and 100 only.");
+}
