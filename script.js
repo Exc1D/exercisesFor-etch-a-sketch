@@ -2,49 +2,7 @@ const createNewGrid = document.getElementById("newGridBtn");
 const displayGridSize = document.getElementById("displayGridSize");
 const sizeInput = document.getElementById("sizeInput");
 const gridContainer = document.getElementById("grid");
-
-function createGrid(size) {
-  console.log(`Creating ${size}x${size} grid`);
-  const container = document.getElementById("grid");
-
-  // Mouse event listeners to enable dragging
-  container.onmousedown = () => {
-    isMouseDown = true;
-    e.preventDefault();
-  };
-  container.onmouseup = () => {
-    isMouseDown = false;
-  };
-  container.onmouseleave = () => {
-    isMouseDown = true;
-  };
-
-  container.innerHTML = "";
-  console.log("Old grid cleared");
-
-  container.style.gridTemplateColumns = `repeat(${size}, 50px)`;
-  console.log(`Grid colums set to: repeat(${size}, 50px)`);
-
-  const totalCells = size * size;
-  console.log(`Total cells to create: ${totalCells}`);
-  displayGridSize.textContent = `Number of cells: ${totalCells}`;
-
-  for (let i = 0; i < totalCells; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-
-    cell.addEventListener("mouseenter", () => {
-      if (isMouseDown) {
-        cell.style.backgroundColor = "#4caf50";
-      }
-    });
-    cell.addEventListener("mousedown", () => {
-      cell.style.backgroundColor = "#4caf50";
-    });
-    container.appendChild(cell);
-  }
-  console.log("Grid creation complete!");
-}
+const statusSpan = document.getElementById("drawingStatus");
 
 function setupNewGrid() {
   const userInput = sizeInput.value;
@@ -75,3 +33,61 @@ function setupNewGrid() {
 }
 
 createNewGrid.addEventListener("click", setupNewGrid);
+
+// Mouse event listeners to enable dragging
+let isMouseDown = false;
+
+document.addEventListener("mousedown", () => {
+  isMouseDown = true;
+});
+document.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+function createGrid(size) {
+  console.log(`Creating ${size}x${size} grid`);
+  const container = document.getElementById("grid");
+
+  container.innerHTML = "";
+  console.log("Old grid cleared");
+
+  container.style.gridTemplateColumns = `repeat(${size}, 50px)`;
+  console.log(`Grid colums set to: repeat(${size}, 50px)`);
+
+  const totalCells = size * size;
+  console.log(`Total cells to create: ${totalCells}`);
+  displayGridSize.textContent = `Number of cells: ${totalCells}`;
+
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+
+    // Color cells on drag
+    cell.addEventListener("mouseenter", () => {
+      if (isMouseDown) {
+        cell.style.backgroundColor = "#4caf50";
+      }
+    });
+    // Color cells on click
+    cell.addEventListener("mousedown", () => {
+      cell.style.backgroundColor = "#4caf50";
+    });
+    container.appendChild(cell);
+  }
+  console.log("Grid creation complete!");
+}
+
+const setDrawingStatus = (drawing) => {
+  statusSpan.textContent = drawing ? "Drawing!" : "Not Drawing";
+  statusSpan.classList.toggle("active", drawing);
+  gridContainer.classList.toggle("drawing", drawing);
+};
+
+document.addEventListener("mousedown", (e) => {
+  isMouseDown = true;
+  setDrawingStatus(true);
+});
+
+document.addEventListener("mouseup", (e) => {
+  isMouseDown = false;
+  setDrawingStatus(false);
+});
