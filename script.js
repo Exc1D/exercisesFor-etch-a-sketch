@@ -1,20 +1,23 @@
 const createNewGrid = document.getElementById("newGridBtn");
 const displayGridSize = document.getElementById("displayGridSize");
 const sizeInput = document.getElementById("sizeInput");
+const gridContainer = document.getElementById("grid");
 
-let isMouseDown = false;
-console.log("Initial drawing state:", isMouseDown);
-
-document.addEventListener("mousedown", () => {
-  isMouseDown = true;
-});
-
-document.addEventListener("mouseup", () => {
-  isMouseDown = false;
-});
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
   const container = document.getElementById("grid");
+
+  // Mouse event listeners to enable dragging
+  container.onmousedown = () => {
+    isMouseDown = true;
+    e.preventDefault();
+  };
+  container.onmouseup = () => {
+    isMouseDown = false;
+  };
+  container.onmouseleave = () => {
+    isMouseDown = true;
+  };
 
   container.innerHTML = "";
   console.log("Old grid cleared");
