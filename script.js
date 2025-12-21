@@ -9,6 +9,15 @@ const colorPicker = document.getElementById("colorPicker");
 const colorCode = document.getElementById("colorCode");
 const colorSwatch = document.getElementById("colorSwatch");
 
+// Inital state variables
+let isMouseDown = false;
+const DEFAULT_COLOR = "#000000";
+let currentColor = DEFAULT_COLOR;
+let currentTool = "pen";
+
+console.log("Initial mousedown:", isMouseDown);
+console.log("Initial tool:", currentTool);
+
 function setupNewGrid() {
   const userInput = sizeInput.value;
 
@@ -41,8 +50,6 @@ function setupNewGrid() {
 createNewGrid.addEventListener("click", setupNewGrid);
 
 // Mouse event listeners to enable dragging
-let isMouseDown = false;
-
 document.addEventListener("mousedown", () => {
   isMouseDown = true;
 });
@@ -51,8 +58,6 @@ document.addEventListener("mouseup", () => {
 });
 
 // Set initial color swatch
-const DEFAULT_COLOR = "#000000";
-let currentColor = DEFAULT_COLOR;
 colorSwatch.style.backgroundColor = currentColor;
 newGridBtn.style.backgroundColor = currentColor;
 
@@ -98,6 +103,17 @@ function createGrid(size) {
     gridContainer.appendChild(cell);
   }
   console.log("Grid creation complete!");
+}
+
+function getRandomColor() {
+  // Generate a random number between 0-256
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+
+  const color = `rgb (${r}, ${g}, ${b})`;
+
+  return color;
 }
 
 function clearGrid() {
