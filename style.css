@@ -74,3 +74,38 @@ button:active {
 #drawingStatus.active {
   color: #4caf50;
 }
+
+#controls {
+  background-color: #fff3e0;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #ff9800;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#controls label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+#colorPicker {
+  width: 60px;
+  height: 40px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#currentColor {
+  background-color: #f5f5f5;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  border: 1px solid #ddd;
+}
