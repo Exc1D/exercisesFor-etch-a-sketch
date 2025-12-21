@@ -3,6 +3,10 @@ const displayGridSize = document.getElementById("displayGridSize");
 const sizeInput = document.getElementById("sizeInput");
 const gridContainer = document.getElementById("grid");
 const statusSpan = document.getElementById("drawingStatus");
+const currentColorDisplay = document.getElementById("currentColor");
+const colorPicker = document.getElementById("colorPicker");
+const colorCode = document.getElementById("colorCode");
+const colorSwatch = document.getElementById("colorSwatch");
 
 function setupNewGrid() {
   const userInput = sizeInput.value;
@@ -43,6 +47,17 @@ document.addEventListener("mousedown", () => {
 document.addEventListener("mouseup", () => {
   isMouseDown = false;
 });
+
+// Color picker to change cell background
+colorPicker.addEventListener("input", () => {
+  currentColor = colorPicker.value;
+  currentColorDisplay.textContent = currentColor;
+
+  console.log("Color changed to:", currentColor);
+});
+console.log("Color picker ready!");
+
+// Create Grid based on User Input
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
   // const container = document.getElementById("grid");
@@ -64,18 +79,19 @@ function createGrid(size) {
     // Color cells on drag
     cell.addEventListener("mouseenter", () => {
       if (isMouseDown) {
-        cell.style.backgroundColor = "#4caf50";
+        cell.style.backgroundColor = currentColor;
       }
     });
     // Color cells on click
     cell.addEventListener("mousedown", () => {
-      cell.style.backgroundColor = "#4caf50";
+      cell.style.backgroundColor = currentColor;
     });
     gridContainer.appendChild(cell);
   }
   console.log("Grid creation complete!");
 }
 
+// Track drawing status for aditional visual feedback
 const setDrawingStatus = (drawing, statusSpan, gridContainer) => {
   statusSpan.textContent = drawing ? "Drawing!" : "Not Drawing";
   statusSpan.classList.toggle("active", drawing);
