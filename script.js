@@ -8,6 +8,8 @@ const currentColorDisplay = document.getElementById("currentColor");
 const colorPicker = document.getElementById("colorPicker");
 const colorCode = document.getElementById("colorCode");
 const colorSwatch = document.getElementById("colorSwatch");
+const penBtn = document.getElementById("penBtn");
+const eraserBtn = document.getElementById("eraserBtn");
 
 // Inital state variables
 let isMouseDown = false;
@@ -57,21 +59,6 @@ document.addEventListener("mouseup", () => {
   isMouseDown = false;
 });
 
-// Set initial color swatch
-colorSwatch.style.backgroundColor = currentColor;
-newGridBtn.style.backgroundColor = currentColor;
-
-// Color picker to change cell background
-colorPicker.addEventListener("input", () => {
-  currentColor = colorPicker.value;
-  colorCode.textContent = currentColor;
-  colorSwatch.style.backgroundColor = currentColor;
-  newGridBtn.style.backgroundColor = currentColor;
-
-  console.log("Color changed to:", currentColor);
-});
-console.log("Color picker ready!");
-
 // Create Grid based on User Input
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
@@ -104,6 +91,45 @@ function createGrid(size) {
   }
   console.log("Grid creation complete!");
 }
+
+// Set initial color swatch
+colorSwatch.style.backgroundColor = currentColor;
+newGridBtn.style.backgroundColor = currentColor;
+
+// Color picker to change cell background
+colorPicker.addEventListener("input", () => {
+  currentColor = colorPicker.value;
+  colorCode.textContent = currentColor;
+  colorSwatch.style.backgroundColor = currentColor;
+  newGridBtn.style.backgroundColor = currentColor;
+
+  console.log("Color changed to:", currentColor);
+});
+console.log("Color picker ready!");
+
+function switchTool(tool) {
+  console.log(`Switching to: ${tool}`);
+
+  currentTool = tool;
+
+  penBtn.classList.remove("active");
+  eraserBtn.classList.remove("active");
+
+  if (tool === "pen") {
+    penBtn.classList.add("active");
+    console.log("Pen mode activated");
+  } else if (tool === "eraser") {
+    eraserBtn.classList.add("active");
+    console.log("Eraser mode activated");
+  }
+}
+
+penBtn.addEventListener("click", () => {
+  switchTool("pen");
+});
+eraserBtn.addEventListener("click", () => {
+  switchTool("eraser");
+});
 
 function getRandomColor() {
   // Generate a random number between 0-256
