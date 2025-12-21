@@ -2,6 +2,9 @@ const createNewGrid = document.getElementById("newGridBtn");
 const displayGridSize = document.getElementById("displayGridSize");
 const sizeInput = document.getElementById("sizeInput");
 
+let isMouseDown = false;
+console.log("Initial drawing state:", isMouseDown);
+
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
   const container = document.getElementById("grid");
@@ -19,6 +22,15 @@ function createGrid(size) {
   for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
+
+    cell.addEventListener("mouseenter", () => {
+      if (isMouseDown) {
+        cell.style.backgroundColor = "#4caf50";
+      }
+    });
+    cell.addEventListener("mousedown", () => {
+      cell.style.backgroundColor = "#4caf50";
+    });
     container.appendChild(cell);
   }
   console.log("Grid creation complete!");
