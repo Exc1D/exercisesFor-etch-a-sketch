@@ -76,7 +76,7 @@ function createGrid(size) {
   console.log("Grid creation complete!");
 }
 
-const setDrawingStatus = (drawing) => {
+const setDrawingStatus = (drawing, statusSpan, gridContainer) => {
   statusSpan.textContent = drawing ? "Drawing!" : "Not Drawing";
   statusSpan.classList.toggle("active", drawing);
   gridContainer.classList.toggle("drawing", drawing);
@@ -84,10 +84,10 @@ const setDrawingStatus = (drawing) => {
 
 document.addEventListener("mousedown", (e) => {
   isMouseDown = true;
-  setDrawingStatus(true);
+  setDrawingStatus(true, statusSpan, gridContainer);
 });
 
 document.addEventListener("mouseup", (e) => {
   isMouseDown = false;
-  setDrawingStatus(false);
+  setDrawingStatus(false, statusSpan, gridContainer);
 });
