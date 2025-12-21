@@ -16,7 +16,12 @@
       id="sizeInput"
       placeholder="Default: 16"
     />
-    <button id="newGridBtn">Create New Grid</button>
+
+    <div id="buttons">
+      <button id="clearBtn">Clear</button>
+      <button id="newGridBtn">Create New Grid</button>
+    </div>
+
     <div id="instructions">
       <p><strong>Click and Drag</strong> to draw!</p>
       <p id="status">Status:<span id="drawingStatus"></span></p>
@@ -33,6 +38,7 @@
         <span id="colorCode">#000000</span>
       </span>
     </div>
+
     <div id="displayGridSize"></div>
     <div class="container" id="grid"></div>
     <script src="script.js"></script>
