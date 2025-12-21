@@ -22,3 +22,26 @@ h1 {
   background: white;
   box-sizing: border-box;
 }
+
+button {
+  background-color: white;
+  color: #4caf50;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #4caf50;
+  color: white;
+  border: 2px solid white;
+}
+
+button:active {
+  background-color: #3d8b40;
+  transform: scale(0.98);
+}
