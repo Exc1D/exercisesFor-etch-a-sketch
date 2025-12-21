@@ -82,12 +82,14 @@ const setDrawingStatus = (drawing, statusSpan, gridContainer) => {
   gridContainer.classList.toggle("drawing", drawing);
 };
 
-document.addEventListener("mousedown", (e) => {
+gridContainer.addEventListener("mousedown", (e) => {
   isMouseDown = true;
+  e.preventDefault();
   setDrawingStatus(true, statusSpan, gridContainer);
 });
 
-document.addEventListener("mouseup", (e) => {
+gridContainer.addEventListener("mouseup", (e) => {
   isMouseDown = false;
+  e.preventDefault();
   setDrawingStatus(false, statusSpan, gridContainer);
 });
