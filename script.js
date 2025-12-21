@@ -1,4 +1,6 @@
 const createNewGrid = document.getElementById("newGridBtn");
+const displayGridSize = document.getElementById("displayGridSize");
+const sizeInput = document.getElementById("sizeInput");
 
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
@@ -12,6 +14,7 @@ function createGrid(size) {
 
   const totalCells = size * size;
   console.log(`Total cells to create: ${totalCells}`);
+  displayGridSize.textContent = `Number of cells: ${totalCells}`;
 
   for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement("div");
@@ -22,11 +25,12 @@ function createGrid(size) {
 }
 
 function setupNewGrid() {
-  const userInput = prompt("Enter grid size (1-100):");
+  const userInput = sizeInput.value;
 
-  if (userInput === null) {
-    console.log("User cancelled");
-    alert("So you don't want to make a grid?");
+  if (userInput === null || userInput === "") {
+    console.log("User cancelled, proceed to default grid");
+    alert("I'll create a grid anyway.");
+    createGrid(16);
   } else {
     console.log("User entered:", userInput);
     console.log("Type of input:", typeof userInput);
