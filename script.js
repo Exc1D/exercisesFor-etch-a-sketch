@@ -144,6 +144,34 @@ sizeSlider.addEventListener("input", () => {
   totalSquares.textContent = `(${total} squares)`;
 });
 
+// Debounce Helper
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Create debounced version
+const debouncedUpdate = debounce(updateGridSize, 100);
+
+// Use debounced version for better performance
+sizeSlider.addEventListener("input", function () {
+  // Update display immediately (feels responsive)
+  const size = parseInt(sizeSlider.value);
+  sizeValue.textContent = size;
+  sizeValue2.textContent = size;
+  totalSquares.textContent = `(${size * size} squares)`;
+
+  // Regenerate grid after user stops dragging (smoother)
+  debouncedUpdate();
+});
+
 function switchTool(tool) {
   currentTool = tool;
 
