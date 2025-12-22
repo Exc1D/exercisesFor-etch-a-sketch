@@ -11,6 +11,10 @@ const colorSwatch = document.getElementById("colorSwatch");
 const penBtn = document.getElementById("penBtn");
 const eraserBtn = document.getElementById("eraserBtn");
 const rainbowBtn = document.getElementById("rainbowBtn");
+const sizeSlider = document.getElementById("sizeSlider");
+const sizeValue = document.getElementById("sizeValue");
+const sizeValue2 = document.getElementById("sizeValue2");
+const totalSquares = document.getElementById("totalSquares");
 
 // Inital state variables
 let isMouseDown = false;
@@ -61,12 +65,18 @@ function getRandomColor() {
 
 // 2. Create Grid based on User Input
 function createGrid(size) {
-  console.log(`Creating ${size}x${size} grid`);
-
   gridContainer.innerHTML = "";
-  console.log("Old grid cleared");
 
-  gridContainer.style.gridTemplateColumns = `repeat(${size}, 50px)`;
+  let cellSize;
+  if (size <= 16) {
+    cellSize = 50;
+  } else if (size <= 32) {
+    cellSize = 25;
+  } else {
+    cellSize = 600 / size; // Dynamic sizing for lage grids
+  }
+
+  gridContainer.style.gridTemplateColumns = `repeat(${size}, ${cellSizepx}`;
   console.log(`Grid colums set to: repeat(${size}, 50px)`);
 
   const totalCells = size * size;
@@ -121,6 +131,17 @@ clearBtn.addEventListener("click", () => {
       cell.style.backgroundColor = "white";
     }, index * 2); // 2ms delay per cell creates wave
   });
+});
+
+// Grid size slider
+sizeSlider.addEventListener("input", () => {
+  const size = parseInt(sizeSlider.value);
+
+  sizeValue.textContent = size;
+  sizeValue2.textContent = size;
+
+  const total = size * size;
+  totalSquares.textContent = `(${total} squares)`;
 });
 
 function switchTool(tool) {
@@ -181,3 +202,4 @@ document.addEventListener("mouseup", () => updateStatus(false));
 
 // Initialize
 switchTool("pen");
+createGrid(16);
