@@ -248,6 +248,7 @@ p {
   outline: none;
   cursor: pointer;
   -webkit-appearance: none;
+  appearance: none;
   border: 2px solid #2d3436;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
