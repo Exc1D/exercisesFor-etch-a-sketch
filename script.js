@@ -18,6 +18,9 @@ const DEFAULT_COLOR = "#000000";
 let currentColor = DEFAULT_COLOR;
 let currentTool = "pen";
 
+// Set initial color swatch
+colorSwatch.style.backgroundColor = currentColor;
+
 console.log("Initial mousedown:", isMouseDown);
 console.log("Initial tool:", currentTool);
 
@@ -145,19 +148,16 @@ rainbowBtn.addEventListener("click", () => {
   switchTool("rainbow");
 });
 
-// Set initial color swatch
-colorSwatch.style.backgroundColor = currentColor;
-newGridBtn.style.backgroundColor = currentColor;
-
 // Color picker to change cell background
-colorPicker.addEventListener("input", () => {
-  currentColor = colorPicker.value;
+colorPicker.addEventListener("input", (e) => {
+  currentColor = e.target.value;
   colorCode.textContent = currentColor;
   colorSwatch.style.backgroundColor = currentColor;
-  newGridBtn.style.backgroundColor = currentColor;
-
   console.log("Color changed to:", currentColor);
+
+  if (currentTool !== "pen") switchTool("pen");
 });
+
 console.log("Color picker ready!");
 
 gridContainer.addEventListener("mousedown", (e) => {
