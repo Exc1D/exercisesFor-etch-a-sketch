@@ -34,11 +34,7 @@ function setupNewGrid() {
     alert("Creating grid anyway...");
     createGrid(16);
   } else {
-    console.log("User entered:", userInput);
-    console.log("Type of input:", typeof userInput);
-
     const gridSize = parseInt(userInput);
-    console.log("Converted to a number:", gridSize);
     console.log("Type after conversion:", typeof gridSize);
 
     if (isNaN(gridSize)) {
@@ -158,12 +154,12 @@ colorPicker.addEventListener("input", (e) => {
   if (currentTool !== "pen") switchTool("pen");
 });
 
-console.log("Color picker ready!");
-
+// 5. Grid interaction delegation
 gridContainer.addEventListener("mousedown", (e) => {
   e.preventDefault();
   if (e.target.classList.contains("cell")) {
     paintCell(e.target);
+    updateStatus(true);
   }
 });
 gridContainer.addEventListener("mouseover", (e) => {
@@ -174,20 +170,14 @@ gridContainer.addEventListener("mouseover", (e) => {
 });
 
 // Track drawing status for aditional visual feedback
-const setDrawingStatus = (drawing, statusSpan, gridContainer) => {
-  statusSpan.textContent = drawing ? "Drawing!" : "Not Drawing";
-  statusSpan.classList.toggle("active", drawing);
-  gridContainer.classList.toggle("drawing", drawing);
-};
+function updateStatus(isDrawing) {
+  statusSpan.textContent = isDrawing ? "Drawing!" : "Not Drawing";
+  statusSpan.classList.toggle("active", isDrawing);
+  gridContainer.classList.toggle("drawing", isDrawing);
+}
 
-gridContainer.addEventListener("mousedown", (e) => {
-  isMouseDown = true;
-  e.preventDefault();
-  setDrawingStatus(true, statusSpan, gridContainer);
-});
+gridContainer.addEventListener("mousedown", () => updateStatus(true));
+document.addEventListener("mouseup", () => updateStatus(false));
 
-gridContainer.addEventListener("mouseup", (e) => {
-  isMouseDown = false;
-  e.preventDefault();
-  setDrawingStatus(false, statusSpan, gridContainer);
-});
+// Initialize
+switchTool("pen");
