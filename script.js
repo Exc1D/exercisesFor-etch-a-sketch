@@ -21,13 +21,14 @@ let currentTool = "pen";
 console.log("Initial mousedown:", isMouseDown);
 console.log("Initial tool:", currentTool);
 
+// 1. SETUP & UTILS
 function setupNewGrid() {
   const userInput = sizeInput.value;
 
   // Input Validation and feedback using alert for extra attitude
   if (userInput === null || userInput === "") {
     console.log("User cancelled, proceed to default grid");
-    alert("I'll create a grid anyway.");
+    alert("Creating grid anyway...");
     createGrid(16);
   } else {
     console.log("User entered:", userInput);
@@ -50,17 +51,16 @@ function setupNewGrid() {
   }
 }
 
-createNewGrid.addEventListener("click", setupNewGrid);
+function getRandomColor() {
+  // Generate a random number between 0-256
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
 
-// Mouse event listeners to enable dragging
-document.addEventListener("mousedown", () => {
-  isMouseDown = true;
-});
-document.addEventListener("mouseup", () => {
-  isMouseDown = false;
-});
+  return `rgb(${r}, ${g}, ${b})`;
+}
 
-// Create Grid based on User Input
+// 2. Create Grid based on User Input
 function createGrid(size) {
   console.log(`Creating ${size}x${size} grid`);
 
@@ -74,24 +74,76 @@ function createGrid(size) {
   console.log(`Total cells to create: ${totalCells}`);
   displayGridSize.textContent = `Number of cells: ${totalCells}`;
 
+  // Document fragment for performance boost
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
-
-    // // Color cells on drag
-    // cell.addEventListener("mouseenter", () => {
-    //   if (isMouseDown) {
-    //     cell.style.backgroundColor = currentColor;
-    //   }
-    // });
-    // // Color cells on click
-    // cell.addEventListener("mousedown", () => {
-    //   cell.style.backgroundColor = currentColor;
-    // });
-    gridContainer.appendChild(cell);
+    fragment.appendChild(cell);
   }
+  gridContainer.appendChild(fragment);
   console.log("Grid creation complete!");
 }
+
+// 3. Painting logic
+function paintCell(target) {
+  if (typeof currentTool !== "undefined" && currentTool === "eraser") {
+    target.style.backgroundColor = "white";
+  } else if (typeof currentTool !== "undefined" && currentTool === "rainbow") {
+    target.style.backgroundColor = getRandomColor();
+  } else {
+    target.style.backgroundColor = currentColor;
+  }
+}
+
+// 4. Event Listeners
+// Mouse event listeners to enable dragging
+document.addEventListener("mousedown", () => {
+  isMouseDown = true;
+});
+document.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+
+// Button events
+createNewGrid.addEventListener("click", setupNewGrid);
+
+clearBtn.addEventListener("click", () => {
+  console.log("CLearing grid...");
+
+  const cells = document.querySelectorAll(".cell");
+
+  // Add fade-out to all cells
+  cells.forEach(function (cell, index) {
+    // Stagger the animation slightly for wave effect
+    setTimeout(function () {
+      cell.style.transition = "background-color 0.3s";
+      cell.style.backgroundColor = "white";
+    }, index * 2); // 2ms delay per cell creates wave
+  });
+});
+
+function switchTool(tool) {
+  currentTool = tool;
+
+  penBtn.classList.toggle("active", tool === "pen");
+  eraserBtn.classList.toggle("active", tool === "eraser");
+  rainbowBtn.classList.toggle("active", tool === "rainbow");
+
+  console.log(`${tool} mode activated!`);
+}
+
+// Bind to tool-btn to run swtich with parameters
+penBtn.addEventListener("click", () => {
+  switchTool("pen");
+});
+eraserBtn.addEventListener("click", () => {
+  switchTool("eraser");
+});
+rainbowBtn.addEventListener("click", () => {
+  switchTool("rainbow");
+});
 
 // Set initial color swatch
 colorSwatch.style.backgroundColor = currentColor;
@@ -108,57 +160,6 @@ colorPicker.addEventListener("input", () => {
 });
 console.log("Color picker ready!");
 
-function switchTool(tool) {
-  console.log(`Switching to: ${tool}`);
-
-  currentTool = tool;
-
-  penBtn.classList.remove("active");
-  eraserBtn.classList.remove("active");
-  rainbowBtn.classList.remove("active");
-
-  if (tool === "pen") {
-    penBtn.classList.add("active");
-    console.log("Pen mode activated");
-  } else if (tool === "eraser") {
-    eraserBtn.classList.add("active");
-    console.log("Eraser mode activated");
-  } else {
-    rainbowBtn.classList.add("active");
-    console.log("Rainbow mode activated");
-  }
-}
-
-// Bind to tool-btn to run swtich with parameters
-penBtn.addEventListener("click", () => {
-  switchTool("pen");
-});
-eraserBtn.addEventListener("click", () => {
-  switchTool("eraser");
-});
-rainbowBtn.addEventListener("click", () => {
-  switchTool("rainbow");
-});
-
-function getRandomColor() {
-  // Generate a random number between 0-256
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
-
-  return `rgb (${r}, ${g}, ${b})`;
-}
-
-function paintCell(target) {
-  if (typeof currentTool !== "unefined" && currentTool === "eraser") {
-    target.style.backgroundColor = "white";
-  } else if (typeof currentTool !== "undefined" && currentTool === "rainbow") {
-    target.style.backgroundColor = getRandomColor();
-  } else {
-    target.style.backgroundColor = currentColor;
-  }
-}
-
 gridContainer.addEventListener("mousedown", (e) => {
   e.preventDefault();
   if (e.target.classList.contains("cell")) {
@@ -171,25 +172,6 @@ gridContainer.addEventListener("mouseover", (e) => {
     paintCell(e.target);
   }
 });
-
-function clearGrid() {
-  console.log("CLearing grid...");
-
-  const cells = document.querySelectorAll(".cell");
-
-  // Add fade-out to all cells
-  cells.forEach(function (cell, index) {
-    // Stagger the animation slightly for wave effect
-    setTimeout(function () {
-      cell.style.transition = "background-color 0.3s";
-      cell.style.backgroundColor = "white";
-    }, index * 2); // 2ms delay per cell creates wave
-  });
-
-  console.log(`Cleared ${cells.length} cells!`);
-}
-
-clearBtn.addEventListener("click", clearGrid);
 
 // Track drawing status for aditional visual feedback
 const setDrawingStatus = (drawing, statusSpan, gridContainer) => {
