@@ -80,7 +80,7 @@ p {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.cell.no-border {
+.no-border {
   border: none !important;
 }
 
@@ -374,7 +374,7 @@ p {
   color: white;
 }
 
-gridLinesBtn {
+#gridLinesBtn {
   background: white;
   color: #2d3436;
 }
@@ -472,6 +472,11 @@ button:active {
   /* Smaller padding on mobile */
   body {
     padding: 10px;
+  }
+
+  .container {
+    width: 380px;
+    height: 380px;
   }
 
   /* Smaller title */

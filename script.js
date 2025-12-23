@@ -285,4 +285,6 @@ console.log("🎨 Starting Etch-a-Sketch...");
 switchTool("pen");
 createGrid(16);
 console.log("✅ Ready to draw!");
-console.log("⌨️ Shortcuts: P (Pen) | R (Rainbow) | E (Eraser) | C (Clear)");
+console.log(
+  "⌨️ Shortcuts: P (Pen) | R (Rainbow) | S (Shading) | E (Eraser) | G (Grid line) | C (Clear)"
+);
