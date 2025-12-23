@@ -383,6 +383,17 @@ p {
   transform: rotate(0deg) scale(1.15);
 }
 
+/* Shading button special styling */
+#shadingBtn.active {
+  background: linear-gradient(135deg, #2d3436, #636e72);
+  color: white;
+  box-shadow: 0 0 20px rgba(45, 52, 54, 0.6);
+}
+
+#shadingBtn:hover {
+  background: linear-gradient(135deg, #636e72, #2d3436);
+}
+
 @keyframes rainbow-glow {
   0%,
   100% {
