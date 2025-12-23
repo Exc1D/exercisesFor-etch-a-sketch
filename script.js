@@ -308,7 +308,52 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ============================================
-// 8. INITIALIZATION
+// 8. TOUCH SUPPORT (Mobile/Tablet)
+// ============================================
+
+// 1. Handle Touch Start (Tap)
+gridContainer.addEventListener(
+  "touchstart",
+  (e) => {
+    e.preventDefault(); // Stop the screen from scrolling when you touch
+    if (e.target.classList.contains("cell")) {
+      paintCell(e.target);
+    }
+  },
+  { passive: false }
+); // 'passive: false' allows us to prevent scrolling
+
+// 2. Handle Touch Move (Drag)
+gridContainer.addEventListener(
+  "touchmove",
+  (e) => {
+    e.preventDefault(); // Stop scrolling while dragging
+
+    // Get the precise location of the finger
+    const touch = e.touches[0];
+
+    // Identify the element currently under the finger
+    const targetElement = document.elementFromPoint(
+      touch.clientX,
+      touch.clientY
+    );
+
+    // If that element is a cell, paint it!
+    if (targetElement && targetElement.classList.contains("cell")) {
+      paintCell(targetElement);
+    }
+  },
+  { passive: false }
+);
+
+// 3. Handle Touch End (Lift finger)
+gridContainer.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  // No specific action needed, just prevents ghost clicks
+});
+
+// ============================================
+// 9. INITIALIZATION
 // ============================================
 
 console.log("🎨 Starting Etch-a-Sketch...");
