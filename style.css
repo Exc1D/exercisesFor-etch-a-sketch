@@ -42,17 +42,21 @@ p {
   display: grid;
   gap: 1px;
   background-color: #2d3436;
-  width: fit-content;
+
+  width: 600px;
+  height: 600px;
+
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="8" fill="rgba(0,0,0,0.5)"/><circle cx="12" cy="12" r="4" fill="white"/></svg>')
       12 12,
     crosshair;
   margin: 20px auto;
-  padding: 10px;
+  padding: 0; /* Remove padding for cleaner look */
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 8px #fff,
     inset 0 0 0 10px #2d3436;
   transform: rotate(-1deg);
   transition: transform 0.3s;
+  box-sizing: border-box;
 }
 
 .container:hover {
@@ -439,18 +443,120 @@ button:active {
    RESPONSIVE
    ============================================ */
 
+/* ============================================
+   MOBILE RESPONSIVE DESIGN 📱
+   ============================================ */
+
 @media (max-width: 768px) {
-  h1 {
-    font-size: 36px;
+  /* Smaller padding on mobile */
+  body {
+    padding: 10px;
   }
+
+  /* Smaller title */
+  h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
   p {
     font-size: 16px;
+    margin-bottom: 15px;
   }
-  .tool-btn,
-  button {
-    padding: 12px 20px;
+
+  /* Stack controls vertically */
+  #controls {
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  #controls label {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Smaller color picker */
+  #colorPicker {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* Grid size control adjustments */
+  #gridSizeControl {
+    padding: 15px;
+  }
+
+  #gridSizeControl label {
     font-size: 18px;
   }
+
+  #totalSquares {
+    font-size: 12px;
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  /* Tool buttons - smaller and wrap */
+  #tools {
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .tool-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    flex: 1 1 calc(50% - 8px); /* Two buttons per row */
+    min-width: 120px;
+  }
+
+  /* Regular buttons */
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  /* Instructions box */
+  #instructions {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  #instructions p {
+    font-size: 14px;
+  }
+
+  /* Display grid size */
+  #displayGridSize {
+    font-size: 14px;
+    max-width: 90%;
+  }
+}
+
+/* Extra small devices (phones in portrait) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .tool-btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 900px) and (orientation: landscape) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tools,
+  #buttons,
   #controls,
   #gridSizeControl,
   #instructions {
