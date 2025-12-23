@@ -11,6 +11,7 @@ const eraserBtn = document.getElementById("eraserBtn");
 const rainbowBtn = document.getElementById("rainbowBtn");
 const sizeSlider = document.getElementById("sizeSlider");
 const totalSquares = document.getElementById("totalSquares");
+const shadingBtn = document.getElementById("shadingBtn");
 
 // STATE VARIABLES
 let isMouseDown = false;
@@ -57,19 +58,18 @@ function createGrid(size) {
 
   gridContainer.innerHTML = "";
 
-  // Dynamic cell sizing
-  let cellSize;
-  if (size <= 16) {
-    cellSize = 50;
-  } else if (size <= 32) {
-    cellSize = 25;
-  } else {
-    cellSize = 600 / size;
-  }
+  const containerWidth = gridContainer.clientWidth || 600;
+  const containerHeight = gridContainer.clientHeight || 600;
+
+  // Account for gaps in between cells
+  const gapSize = 1;
+  const totalGapWidth = (size - 1) * gapSize;
+  const availableWidth = containerWidth - totalGapWidth;
+  const cellSize = Math.floor(availableWidth / size);
 
   // 🔧 FIX: Added missing space and 'px'
   gridContainer.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
-  console.log(`Grid columns set to: repeat(${size}, ${cellSize}px)`);
+  gridContainer.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
 
   const totalCells = size * size;
   console.log(`Total cells to create: ${totalCells}`);
@@ -105,6 +105,8 @@ function paintCell(target) {
     target.style.backgroundColor = "white";
   } else if (currentTool === "rainbow") {
     target.style.backgroundColor = getRandomColor();
+  } else if (currentTool === "shading") {
+    applyShading(target);
   } else {
     target.style.backgroundColor = currentColor;
   }
@@ -130,6 +132,7 @@ function switchTool(tool) {
   penBtn.classList.toggle("active", tool === "pen");
   eraserBtn.classList.toggle("active", tool === "eraser");
   rainbowBtn.classList.toggle("active", tool === "rainbow");
+  shadingBtn.classList.toggle("active", tool === "shading");
 
   console.log(`🔧 ${tool.toUpperCase()} mode activated!`);
 }
@@ -180,6 +183,7 @@ clearBtn.addEventListener("click", () => {
     setTimeout(() => {
       cell.style.transition = "background-color 0.3s";
       cell.style.backgroundColor = "white";
+      cell.dataset.darkness = "0";
     }, index * 2);
   });
 
@@ -201,6 +205,7 @@ sizeSlider.addEventListener("input", () => {
 penBtn.addEventListener("click", () => switchTool("pen"));
 eraserBtn.addEventListener("click", () => switchTool("eraser"));
 rainbowBtn.addEventListener("click", () => switchTool("rainbow"));
+shadingBtn.addEventListener("click", () => switchTool("shading"));
 
 // Color picker
 colorPicker.addEventListener("input", (e) => {
@@ -232,6 +237,7 @@ gridContainer.addEventListener("mouseover", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key.toLowerCase() === "p") switchTool("pen");
   if (e.key.toLowerCase() === "r") switchTool("rainbow");
+  if (e.key.toLowerCase() === "s") switchTool("shading");
   if (e.key.toLowerCase() === "e") switchTool("eraser");
   if (e.key.toLowerCase() === "c") clearBtn.click();
 });
