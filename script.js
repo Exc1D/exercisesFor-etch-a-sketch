@@ -67,7 +67,6 @@ function createGrid(size) {
   const totalGapWidth = (size - 1) * gapSize;
   const availableWidth = containerWidth - totalGapWidth;
   const cellSize = Math.floor(availableWidth / size);
-
   gridContainer.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
   gridContainer.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
 
@@ -93,6 +92,9 @@ function createGrid(size) {
     if (!showGridLines) {
       cell.style.border = "none";
       cell.classList.add("no-border");
+    } else {
+      cell.style.border = "1px solid rgba(0, 0, 0, 0.05)";
+      cell.classList.remove("no-border");
     }
 
     fragment.appendChild(cell);
@@ -106,7 +108,7 @@ function createGrid(size) {
 // TOGGLE GRID LINES
 // ============================================
 
-let showGridLines = "true";
+let showGridLines = true;
 
 function toggleGridLines() {
   showGridLines = !showGridLines;
