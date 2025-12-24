@@ -485,7 +485,7 @@ footer a:hover {
    MOBILE RESPONSIVE DESIGN 📱
    ============================================ */
 
-@media (max-width: 1O00px) {
+@media (max-width: 1200px) {
   main {
     flex-direction: column;
     align-items: center;
